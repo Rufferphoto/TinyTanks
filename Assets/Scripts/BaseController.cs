@@ -34,11 +34,14 @@ public class BaseController : Controller
 
     private void TankRotation()
     {
-        rotationMovement.x = movementInput.x;
-        rotationMovement.z = movementInput.y;
-        Quaternion lookRotation = Quaternion.LookRotation(rotationMovement - transform.position);
-        // Quaternion lookRotation = transform.rotation * Quaternion.Euler(Vector3.up * (movementInput * rotationSpeed));
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, rotationSpeed * Time.deltaTime);
+        rotationMovement = new Vector3(movementInput.x, 0, movementInput.y);
+        rotationMovement.Normalize();
+
+        if (rotationMovement != Vector3.zero)
+        {
+            Quaternion lookRotation = Quaternion.LookRotation(rotationMovement, Vector3.up);
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, rotationSpeed * Time.deltaTime);
+        }
     }
 
     private void FixedUpdate()

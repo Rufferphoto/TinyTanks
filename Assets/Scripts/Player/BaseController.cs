@@ -18,7 +18,11 @@ public class BaseController : Controller
     private void OnEnable()
     {
         InterfaceHandler.Instance.inputActions.PlayerTank.Enable();
+    }
 
+    private void Awake()
+    {
+        base.Init();
     }
 
     public void OnMove(InputValue value)

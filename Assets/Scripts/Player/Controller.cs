@@ -10,11 +10,10 @@ public class Controller : MonoBehaviour
     protected Keyboard cKeyboard;
     protected Vector3 mousePos;
 
-    [SerializeField] protected float maxHealth;
     [SerializeField] protected float rayDistance;
     [SerializeField] protected LayerMask ignoreMask;
 
-    void Awake()
+    protected void Init()
     {
         cMouse = Mouse.current;
         cCamera = Camera.main;

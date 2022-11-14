@@ -33,7 +33,8 @@ public class BaseController : Controller
     private void TankMovement()
     {
         controller.Move(Vector3.forward * (movementInput.y * movementSpeed * Time.deltaTime)); // Swap vector3.forward to transform.forward to link with transform rotation.
-        controller.Move(Vector3.right * movementInput.x * movementSpeed * Time.deltaTime);        
+        controller.Move(Vector3.right * movementInput.x * movementSpeed * Time.deltaTime);
+        controller.Move(Vector3.up * gravity * Time.deltaTime);
     }
 
     private void TankRotation()

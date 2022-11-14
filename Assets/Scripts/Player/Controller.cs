@@ -12,6 +12,7 @@ public class Controller : MonoBehaviour
 
     [SerializeField] protected float rayDistance;
     [SerializeField] protected LayerMask ignoreMask;
+    [SerializeField] protected float gravity;
 
     protected void Init()
     {

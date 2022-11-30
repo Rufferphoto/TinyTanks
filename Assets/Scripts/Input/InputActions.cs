@@ -37,6 +37,15 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
+                    ""name"": ""Rotate"",
+                    ""type"": ""Value"",
+                    ""id"": ""f5f0c19c-6839-4a6a-b487-fe3a3cabdb0f"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
                     ""name"": ""Fire"",
                     ""type"": ""Button"",
                     ""id"": ""75c95661-0d81-402f-bc79-e15137c1d8d8"",
@@ -160,7 +169,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""704a805a-3dfa-4c68-b8c0-0e82863c3b5a"",
-                    ""path"": ""<Gamepad>/leftStick"",
+                    ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -187,6 +196,83 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""WASD"",
+                    ""id"": ""d7bd3c09-0b9e-4009-b39d-49ce476d6670"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotate"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""b313f733-b2a0-4b0b-942b-e9ffed7d90ae"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""108c570a-9f3a-4a85-b48d-4e00c6a01160"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Arrows"",
+                    ""id"": ""c56e6816-ecb8-4bff-87db-bb538a40e8a1"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotate"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""6bf09816-15fa-43ba-8cd1-1f8c996362c8"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""41461e0d-995c-468f-a1f8-6eb13255c155"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""32e90d31-eede-4302-a3f8-82db8bb4af34"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -220,6 +306,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         // PlayerTank
         m_PlayerTank = asset.FindActionMap("PlayerTank", throwIfNotFound: true);
         m_PlayerTank_Move = m_PlayerTank.FindAction("Move", throwIfNotFound: true);
+        m_PlayerTank_Rotate = m_PlayerTank.FindAction("Rotate", throwIfNotFound: true);
         m_PlayerTank_Fire = m_PlayerTank.FindAction("Fire", throwIfNotFound: true);
     }
 
@@ -281,12 +368,14 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_PlayerTank;
     private IPlayerTankActions m_PlayerTankActionsCallbackInterface;
     private readonly InputAction m_PlayerTank_Move;
+    private readonly InputAction m_PlayerTank_Rotate;
     private readonly InputAction m_PlayerTank_Fire;
     public struct PlayerTankActions
     {
         private @InputActions m_Wrapper;
         public PlayerTankActions(@InputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_PlayerTank_Move;
+        public InputAction @Rotate => m_Wrapper.m_PlayerTank_Rotate;
         public InputAction @Fire => m_Wrapper.m_PlayerTank_Fire;
         public InputActionMap Get() { return m_Wrapper.m_PlayerTank; }
         public void Enable() { Get().Enable(); }
@@ -300,6 +389,9 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                 @Move.started -= m_Wrapper.m_PlayerTankActionsCallbackInterface.OnMove;
                 @Move.performed -= m_Wrapper.m_PlayerTankActionsCallbackInterface.OnMove;
                 @Move.canceled -= m_Wrapper.m_PlayerTankActionsCallbackInterface.OnMove;
+                @Rotate.started -= m_Wrapper.m_PlayerTankActionsCallbackInterface.OnRotate;
+                @Rotate.performed -= m_Wrapper.m_PlayerTankActionsCallbackInterface.OnRotate;
+                @Rotate.canceled -= m_Wrapper.m_PlayerTankActionsCallbackInterface.OnRotate;
                 @Fire.started -= m_Wrapper.m_PlayerTankActionsCallbackInterface.OnFire;
                 @Fire.performed -= m_Wrapper.m_PlayerTankActionsCallbackInterface.OnFire;
                 @Fire.canceled -= m_Wrapper.m_PlayerTankActionsCallbackInterface.OnFire;
@@ -310,6 +402,9 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
+                @Rotate.started += instance.OnRotate;
+                @Rotate.performed += instance.OnRotate;
+                @Rotate.canceled += instance.OnRotate;
                 @Fire.started += instance.OnFire;
                 @Fire.performed += instance.OnFire;
                 @Fire.canceled += instance.OnFire;
@@ -329,6 +424,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
     public interface IPlayerTankActions
     {
         void OnMove(InputAction.CallbackContext context);
+        void OnRotate(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
     }
 }

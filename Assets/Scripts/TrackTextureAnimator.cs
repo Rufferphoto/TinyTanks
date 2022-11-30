@@ -5,6 +5,7 @@ using UnityEngine;
 public class TrackTextureAnimator : MonoBehaviour
 {
     public float speedY;
+    [SerializeField] private float speedMutliplier;
     [SerializeField] private float currentYPos;
     [SerializeField] private float currentXPos;
 
@@ -19,7 +20,7 @@ public class TrackTextureAnimator : MonoBehaviour
 
     private void FixedUpdate()
     {
-        currentYPos += Time.deltaTime * speedY;
+        currentYPos += Time.deltaTime * speedY * speedMutliplier;
         trackRenderer.material.SetTextureOffset("_MainTex", new Vector2(currentXPos, currentYPos));
     }
 }

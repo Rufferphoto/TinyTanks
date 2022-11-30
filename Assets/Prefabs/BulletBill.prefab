@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 30651074414171271}
   - component: {fileID: 6008055928510126563}
   - component: {fileID: 5816624849868767559}
+  - component: {fileID: 69517147439735024}
   m_Layer: 7
   m_Name: BulletBill
   m_TagString: Untagged
@@ -110,4 +111,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bf3c419b895bdc4988b2c2900c2b143, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 1
+  rb: {fileID: 69517147439735024}
+--- !u!54 &69517147439735024
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2140665185255903587}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 1
+  m_AngularDrag: 100
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
